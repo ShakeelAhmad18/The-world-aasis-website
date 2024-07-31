@@ -1,27 +1,37 @@
+import axios from 'axios';
 import { eachDayOfInterval } from 'date-fns';
 
 /////////////
 // GET
 
 export async function getCabin(id) {
-  const { data, error } = await supabase
+  /*const { data, error } = await supabase
     .from('cabins')
     .select('*')
     .eq('id', id)
-    .single();
+    .single();*/
+
+    try {
+
+      const data=await axios.get(`http://localhost:5000/api/cabins/${id}`)
+
+      return data;
+      
+    } catch (error) {
+      if (error) {
+        console.error(error);
+      }
+    }
 
   // For testing
   // await new Promise((res) => setTimeout(res, 1000));
 
-  if (error) {
-    console.error(error);
-  }
-
-  return data;
+  
 }
 
 
 export async function getCabinPrice(id) {
+  /*
   const { data, error } = await supabase
     .from('cabins')
     .select('regularPrice, discount')
@@ -31,13 +41,21 @@ export async function getCabinPrice(id) {
   if (error) {
     console.error(error);
   }
+  */
+  try {
+     const data=await axios.get(`http://localhost:5000/api/cabins/price/${id}`)
 
-  return data;
-}
+     return data;
+
+    } catch (error) {
+       console.log(error)
+   }
+ 
+ }
 
 
 export const getCabins = async function () {
-  const { data, error } = await supabase
+  /*const { data, error } = await supabase
     .from('cabins')
     .select('id, name, maxCapacity, regularPrice, discount, image')
     .order('name');
@@ -45,9 +63,18 @@ export const getCabins = async function () {
   if (error) {
     console.error(error);
     throw new Error('Cabins could not be loaded');
-  }
+  } */
 
-  return data;
+  try {
+
+    const data=await axios.get('http://localhost:5000/api/cabins')
+    return data;
+    
+  } catch (error) {
+    console.log(error)
+  }
+   
+  
 };
 
 // Guests are uniquely identified by their email address
@@ -139,6 +166,7 @@ export async function getSettings() {
 
   return data;
 }
+
 
 
 export async function getCountries() {
