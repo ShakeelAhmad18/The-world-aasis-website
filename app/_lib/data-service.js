@@ -106,6 +106,7 @@ export async function getBooking(id) {
 
 
 export async function getBookings(guestId) {
+
   const { data, error, count } = await supabase
     .from('bookings')
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
@@ -120,7 +121,6 @@ export async function getBookings(guestId) {
     throw new Error('Bookings could not get loaded');
   }
 
-  return data;
 }
 
 
@@ -131,7 +131,7 @@ export async function getBookedDatesByCabinId(cabinId) {
   today = today.toISOString();
 
   // Getting all bookings
-  const { data, error } = await supabase
+  /*const { data, error } = await supabase
     .from('bookings')
     .select('*')
     .eq('cabinId', cabinId)
@@ -140,8 +140,10 @@ export async function getBookedDatesByCabinId(cabinId) {
   if (error) {
     console.error(error);
     throw new Error('Bookings could not get loaded');
-  }
+  }*/
 
+    const res=await axios.get(`http://localhost:5000/api/booking/getbooking/cabin/${cabinId}`)
+    const data=res.data
   // Converting to actual dates to be displayed in the date picker
   const bookedDates = data
     .map((booking) => {
@@ -156,15 +158,24 @@ export async function getBookedDatesByCabinId(cabinId) {
 }
 
 
+
+
 export async function getSettings() {
-  const { data, error } = await supabase.from('settings').select('*').single();
+  /*const { data, error } = await supabase.from('settings').select('*').single();
 
   if (error) {
     console.error(error);
     throw new Error('Settings could not be loaded');
-  }
+  }*/
+ try {
 
-  return data;
+  const res=await axios.get('http://localhost:5000/api/sitting/getsitting')
+  return res.data;
+  
+ } catch (error) {
+   throw new Error(error.message)
+ }
+ 
 }
 
 
@@ -229,6 +240,7 @@ export async function updateGuest(id, updatedFields) {
   }
   return data;
 }
+
 
 export async function updateBooking(id, updatedFields) {
   const { data, error } = await supabase
