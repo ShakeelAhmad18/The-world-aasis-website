@@ -12,7 +12,6 @@ const authConfig={
         authorized({auth,request}){
             return !!auth?.user
         },
-        signIn(){}
     },
     pages:{
         signIn:'/login',

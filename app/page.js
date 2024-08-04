@@ -2,8 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import bg from '@/public/bg.png'
+import { getGuest } from "./_lib/data-service";
 
-export default function Page() {
+export default async function Page() {
+
+  const guest=await getGuest();
+  console.log(guest)
+
   return (
     <main className="mt-24">
       <Image src={bg} placeholder="blur" quality={80} fill alt="Mountains and forests with two cabins" className="object-cover object-top"/>

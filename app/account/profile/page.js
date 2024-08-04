@@ -1,14 +1,16 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfile from "@/app/_components/UpdateProfile";
+import { getGuest } from "@/app/_lib/data-service";
 
 export const metadata={
   title:'Profile'
 }
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
-  const countryFlag = "pt.jpg";
-  const nationality = "portugal";
+  const guest=await getGuest();
+
+ console.log(guest)
  
 
   return (

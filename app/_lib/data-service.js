@@ -54,6 +54,14 @@ export async function getCabinPrice(id) {
  }
 
 
+ export const regsiterGuest=async function(formData){
+
+  const res= axios.post('http://localhost:5000/api/guest/register',formData)
+  return res.data;
+  
+
+ }
+
 export const getCabins = async function () {
   /*const { data, error } = await supabase
     .from('cabins')
@@ -78,15 +86,29 @@ export const getCabins = async function () {
 };
 
 // Guests are uniquely identified by their email address
-export async function getGuest(email) {
-  const { data, error } = await supabase
+export async function getGuest() {
+ /* const { data, error } = await supabase
     .from('guests')
     .select('*')
     .eq('email', email)
     .single();
 
   // No error here! We handle the possibility of no guest in the sign in callback
-  return data;
+  return data;*/
+  
+  try {
+
+       const res=await axios.get('http://localhost:5000/api/guest/getguest')
+       const data=res.data;
+       return data;
+
+  } catch (error) {
+
+    console.log(error.message)
+
+  }
+
+
 }
 
 export async function getBooking(id) {

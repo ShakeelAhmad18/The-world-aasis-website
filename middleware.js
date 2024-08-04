@@ -9,8 +9,8 @@ export function middleware(request){
 export const  config={
       matcher:['/account']
 }*/
-
 import { auth } from "./app/_lib/auth";
+export {default} from 'next-auth/middleware'
 
 export const middleware=auth;
 
